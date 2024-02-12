@@ -28,7 +28,7 @@ Job Board: A dedicated space for sharing and discovering job opportunities.
 
 ** Tech Stack**
 
-Front-end: React Native for cross-platform mobile app development. 
+Front-end: React Native/EXPO for cross-platform mobile app development. 
 Back-end: Node.js with Express for the server.
 Database: Mongo DB or Knex.
 Authentication: Firebase/AuthO - still deciding.
