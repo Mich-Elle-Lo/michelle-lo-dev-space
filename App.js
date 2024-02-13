@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import LoginScreen from "./Src/Screens/Login/Login";
 import FeedScreen from "./Src/Screens/Feed/Feed";
 import BottomTabNav from "./Src/Components/BottomTabNav/BottomTabNav";
+import RegisterScreen from "./Src/Screens/Register/Register";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,11 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

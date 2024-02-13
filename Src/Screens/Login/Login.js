@@ -43,6 +43,10 @@ export default function LoginScreen() {
     }
   };
 
+  const handleRegister = () => {
+    navigation.navigate("Register");
+  };
+
   return (
     <View style={styles.container}>
       <Image source={DevSpaceLogo} style={styles.logo} />
@@ -63,7 +67,7 @@ export default function LoginScreen() {
       <Pressable onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
-      <Pressable onPress={() => {}}>
+      <Pressable onPress={handleRegister}>
         <Text style={styles.signUpText}>
           Don't have an account? Create one here
         </Text>
