@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   View,
   Text,
@@ -6,15 +9,38 @@ import {
   Pressable,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 import DevSpaceLogo from "../../Assets/Logo/Logo.png";
 
-const LoginScreen = () => {
-  const [username, setUsername] = useState("");
+export default function LoginScreen() {
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
-  const handleLogin = () => {
-    console.log("Username:", username, "Password:", password);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier,
+          password,
+        }),
+      });
+
+      const json = await response.json();
+
+      if (response.ok) {
+        await AsyncStorage.setItem("userToken", json.token);
+
+        navigation.navigate("MainApp");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (
@@ -22,9 +48,9 @@ const LoginScreen = () => {
       <Image source={DevSpaceLogo} style={styles.logo} />
       <Text style={styles.title}>DEV SPACE</Text>
       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="Username or Email"
+        value={identifier}
+        onChangeText={setIdentifier}
         style={styles.input}
       />
       <TextInput
@@ -37,18 +63,14 @@ const LoginScreen = () => {
       <Pressable onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
-      <Pressable
-        onPress={() => {
-          /* ADD LOGIC */
-        }}
-      >
+      <Pressable onPress={() => {}}>
         <Text style={styles.signUpText}>
           Don't have an account? Create one here
         </Text>
       </Pressable>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -91,5 +113,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
-export default LoginScreen;
