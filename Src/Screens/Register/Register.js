@@ -31,6 +31,7 @@ export default function RegisterScreen() {
       });
       console.log("Registration successful", response.data);
       Alert.alert("Success", "Registration successful!");
+      navigation.goBack;
     } catch (error) {
       console.error("Error with Resgistration", error.response.data);
     }
@@ -107,13 +108,13 @@ const styles = StyleSheet.create({
     width: "75%",
     backgroundColor: "white",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 30,
     marginBottom: 10,
   },
   button: {
     backgroundColor: "#1c1c1e",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 30,
     width: "60%",
     alignItems: "center",
     marginTop: 20,

@@ -40,6 +40,7 @@ export default function LoginScreen() {
       }
     } catch (error) {
       console.error("Login error:", error);
+      Alert.alert("Oh no!", "Wrong Username or Password!");
     }
   };
 
