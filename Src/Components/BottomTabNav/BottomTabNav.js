@@ -4,6 +4,8 @@ import FeedScreen from "../../Screens/Feed/Feed";
 import ProfileScreen from "../../Screens/Profile/profile";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import NewsScreen from "../../Screens/News/News";
+import ChatScreen from "../../Screens/Chat/Chat";
+import CareerScreen from "../../Screens/Career/Career";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -16,16 +18,27 @@ export default function BottomTabNav() {
       barStyle={{ backgroundColor: "black" }}
     >
       <Tab.Screen
-        name="News"
-        component={NewsScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
-          tabBarLabel: "News",
+          tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="newspaper-variant-outline"
+              name="face-woman-profile"
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Careers"
+        component={CareerScreen}
+        options={{
+          tabBarLabel: "Careers",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="laptop" color={color} size={26} />
           ),
         }}
       />
@@ -40,14 +53,26 @@ export default function BottomTabNav() {
           ),
         }}
       />
+
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="Chat"
+        component={ChatScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Chat",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="wechat" color={color} size={26} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="News"
+        component={NewsScreen}
+        options={{
+          tabBarLabel: "News",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="face-woman-profile"
+              name="newspaper-variant-outline"
               color={color}
               size={26}
             />

@@ -35,6 +35,7 @@ export default function LoginScreen() {
 
       if (response.ok) {
         await AsyncStorage.setItem("userToken", json.token);
+        await AsyncStorage.setItem("userId", json.userId.toString());
 
         navigation.navigate("MainApp");
       }

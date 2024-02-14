@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {
   View,
   Text,
@@ -7,26 +9,45 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  TextInput,
+  TouchableOpacity,
 } from "react-native";
 
 export default function FeedScreen() {
   const baseURL = "http://localhost:3000/";
   const [posts, setPosts] = useState([]);
+  const [comment, setComment] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   const fetchPosts = async () => {
     try {
       const response = await axios.get("http://localhost:3000/posts");
       setPosts(response.data);
-      console.log(posts);
     } catch (error) {
       console.error("Error getting post:", error);
     }
   };
 
+  const postComment = async (postId, comment) => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      const response = await axios.post(
+        "http://localhost:3000/posts/${postId}/comments",
+        {
+          user_id: userId,
+          comment,
+        }
+      );
+      setComment("");
+      setRefresh(true);
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
+  };
+
   useEffect(() => {
-    console.log(posts);
     fetchPosts();
-  }, []);
+  }, [refresh]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,6 +66,20 @@ export default function FeedScreen() {
                     {comment.commenter}: {comment.comment}
                   </Text>
                 ))}
+              {/* Comment Input */}
+              <TextInput
+                style={styles.commentInput}
+                onChangeText={setComment}
+                value={comment}
+                placeholder="Write a comment..."
+                placeholderTextColor="grey"
+              />
+              <TouchableOpacity
+                onPress={() => postComment(item.id)}
+                style={styles.commentButton}
+              >
+                <MaterialCommunityIcons name="send" color="white" size={20} />
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -88,5 +123,13 @@ const styles = StyleSheet.create({
     color: "grey",
     fontSize: 14,
     marginTop: 4,
+  },
+  commentInput: {
+    color: "white",
+    marginTop: 8,
+  },
+  commentButton: {
+    padding: 8,
+    alignItems: "center",
   },
 });

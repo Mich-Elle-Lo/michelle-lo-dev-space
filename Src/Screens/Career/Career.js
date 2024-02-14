@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-export default function ChatScreen() {
+export default function CareerScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>DEV SPACE - CHAT</Text>
+      <Text style={styles.title}>DEV SPACE - CAREERS</Text>
     </View>
   );
 }
