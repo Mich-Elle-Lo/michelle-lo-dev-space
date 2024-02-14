@@ -3,6 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import FeedScreen from "../../Screens/Feed/Feed";
 import ProfileScreen from "../../Screens/Profile/profile";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import NewsScreen from "../../Screens/News/News";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -14,6 +15,21 @@ export default function BottomTabNav() {
       inactiveColor="white"
       barStyle={{ backgroundColor: "black" }}
     >
+      <Tab.Screen
+        name="News"
+        component={NewsScreen}
+        options={{
+          tabBarLabel: "News",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="newspaper-variant-outline"
+              color={color}
+              size={26}
+            />
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="Feed"
         component={FeedScreen}
