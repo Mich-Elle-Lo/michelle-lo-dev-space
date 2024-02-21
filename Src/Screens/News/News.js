@@ -7,25 +7,32 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 
 export default function NewsScreen() {
   const baseURL = "http://localhost:3000/";
   const [news, setNews] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchNews = async () => {
+    setRefreshing(true);
     try {
       const response = await axios.get("https://dev.to/api/articles");
       setNews(response.data);
     } catch (error) {
       console.error("Error getting news:", error);
     }
+    setRefreshing(false);
   };
 
   useEffect(() => {
     fetchNews();
   }, []);
 
+  const onRefresh = () => {
+    fetchNews();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -49,6 +56,13 @@ export default function NewsScreen() {
             </View> */}
           </View>
         )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#fff"
+          />
+        }
       />
     </SafeAreaView>
   );

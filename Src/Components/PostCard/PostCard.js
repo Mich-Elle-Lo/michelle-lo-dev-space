@@ -15,6 +15,8 @@ export default function PostCard({ item, onRefresh }) {
   const [localComment, setLocalComment] = useState("");
   const [placeholderWarning, setPlaceholderWarning] = useState(false);
 
+  const mobileServer = "http://10.0.0.108:3000";
+
   const postComment = async () => {
     const postId = item.id;
 
@@ -26,7 +28,7 @@ export default function PostCard({ item, onRefresh }) {
       const userId = await AsyncStorage.getItem("userId");
 
       const response = await axios.post(
-        `http://localhost:3000/posts/${postId}/comments`,
+        `${mobileServer}/posts/${postId}/comments`,
         {
           user_id: userId,
           comment: localComment.trim(),
@@ -77,12 +79,13 @@ export default function PostCard({ item, onRefresh }) {
 
 const styles = StyleSheet.create({
   postContainer: {
-    backgroundColor: "#1c1c1e",
-    borderRadius: 10,
+    // backgroundColor: "#1c1c1e",
+    // borderRadius: 10,
     overflow: "hidden",
     marginVertical: 8,
-    marginHorizontal: 16,
-    borderWidth: 1,
+    // marginHorizontal: 16,
+    // borderWidth: 1,
+    borderTopWidth: 1,
     borderColor: "#343536",
     opacity: 0.9,
     paddingBottom: 12,
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
   },
   postImage: {
     width: "100%",
-    height: 200,
+    height: 400,
     marginBottom: 8,
   },
   postCaption: {
@@ -109,8 +112,11 @@ const styles = StyleSheet.create({
   commentsContainer: {
     // paddingVertical: 4,
     // paddingHorizontal: 8,
-    backgroundColor: "#2c2c2e",
-    borderRadius: 5,
+    // backgroundColor: "#2c2c2e",
+    // borderRadius: 5,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: "#343536",
     padding: 8,
     paddingTop: 4,
   },
@@ -124,7 +130,7 @@ const styles = StyleSheet.create({
   commentInput: {
     color: "white",
     marginTop: 8,
-    backgroundColor: "#2c2c2e",
+    // backgroundColor: "#2c2c2e",
     borderRadius: 5,
     padding: 6,
     paddingHorizontal: 15,

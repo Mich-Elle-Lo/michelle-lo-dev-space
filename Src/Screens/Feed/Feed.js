@@ -1,29 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { FlatList, StyleSheet, SafeAreaView } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  RefreshControl,
+} from "react-native";
 import PostCard from "../../Components/PostCard/PostCard";
 
 export default function FeedScreen() {
   const baseURL = "http://localhost:3000/";
-  const [posts, setPosts] = useState([]);
+
   const [refresh, setRefresh] = useState(false);
 
-  const fetchPosts = async () => {
+  const mobileServer = "http://10.0.0.108:3000";
+  const [posts, setPosts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchPosts = useCallback(async () => {
+    setRefreshing(true);
     try {
-      const response = await axios.get("http://localhost:3000/posts");
+      const response = await axios.get(`${mobileServer}/posts`);
       setPosts(response.data);
     } catch (error) {
-      console.error("Error getting post:", error);
+      console.error("Error getting posts:", error);
     }
-  };
-
-  const triggerRefresh = () => {
-    setRefresh((prevRefresh) => !prevRefresh);
-  };
+    setRefreshing(false);
+  }, [mobileServer]);
 
   useEffect(() => {
     fetchPosts();
-  }, [refresh]);
+  }, [fetchPosts]);
+
+  const onRefresh = () => {
+    fetchPosts();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,9 +42,15 @@ export default function FeedScreen() {
         data={posts}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <PostCard item={item} onRefresh={triggerRefresh} />
+          <PostCard item={item} onRefresh={onRefresh} />
         )}
-        extraData={refresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#fff"
+          />
+        }
       />
     </SafeAreaView>
   );

@@ -18,9 +18,12 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
+  const mobileServer = "http://10.0.0.108:3000";
+  const localServer = "http://localhost:3000";
+
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${mobileServer}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +42,8 @@ export default function LoginScreen() {
           "userId",
           json.userId.toString()
         );
-        console.log(userIdValue);
+        console.log(json.userId.toString());
+        console.log(password);
         navigation.navigate("MainApp");
       }
     } catch (error) {
@@ -58,12 +62,14 @@ export default function LoginScreen() {
       <Text style={styles.title}>DEV SPACE</Text>
       <TextInput
         placeholder="Username or Email"
+        placeholderTextColor="#888"
         value={identifier}
         onChangeText={setIdentifier}
         style={styles.input}
       />
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry

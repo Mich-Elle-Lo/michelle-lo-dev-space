@@ -46,18 +46,21 @@ export default function RegisterScreen() {
       <Text style={styles.title}>Register on DEV SPACE</Text>
       <TextInput
         placeholder="Username"
+        placeholderTextColor="#888"
         value={username}
         onChangeText={setUsername}
         style={styles.input}
       />
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#888"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
       />
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -65,12 +68,14 @@ export default function RegisterScreen() {
       />
       <TextInput
         placeholder="Location"
+        placeholderTextColor="#888"
         value={location}
         onChangeText={setLocation}
         style={styles.input}
       />
       <TextInput
         placeholder="Bio"
+        placeholderTextColor="#888"
         value={bio}
         onChangeText={setBio}
         style={styles.input}
@@ -105,12 +110,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
+    color: "black",
     width: "75%",
     height: 50,
     backgroundColor: "white",
     padding: 15,
     borderRadius: 30,
     marginBottom: 10,
+    // alignContent: "center",
   },
   button: {
     backgroundColor: "#1c1c1e",

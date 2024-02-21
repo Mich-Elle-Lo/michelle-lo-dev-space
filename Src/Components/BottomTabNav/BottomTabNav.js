@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import NewsScreen from "../../Screens/News/News";
 import ChatScreen from "../../Screens/Chat/Chat";
 import CareerScreen from "../../Screens/Career/Career";
+import UploadPost from "../../Screens/UploadPost/UploadPost";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -50,6 +51,16 @@ export default function BottomTabNav() {
           tabBarLabel: "Feed",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="UploadPost"
+        component={UploadPost}
+        options={{
+          tabBarLabel: "Upload",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="camera" color={color} size={26} />
           ),
         }}
       />
