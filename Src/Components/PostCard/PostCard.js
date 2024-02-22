@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import {
   View,
   Text,
@@ -7,13 +7,16 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { Video } from "expo-av";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-export default function PostCard({ item, onRefresh }) {
+const PostCard = memo(({ item, onRefresh }) => {
   const [localComment, setLocalComment] = useState("");
   const [placeholderWarning, setPlaceholderWarning] = useState(false);
+  const isVideo = item.photo.endsWith(".mov");
 
   const mobileServer = "http://10.0.0.108:3000";
 
@@ -45,7 +48,18 @@ export default function PostCard({ item, onRefresh }) {
   return (
     <View style={styles.postContainer}>
       <Text style={styles.username}>{item.username}</Text>
-      <Image source={{ uri: item.photo }} style={styles.postImage} />
+      {isVideo ? (
+        <Video
+          source={{ uri: item.photo }}
+          style={styles.postImage}
+          resizeMode="cover"
+          shouldPlay={false}
+          isLooping
+          useNativeControls
+        />
+      ) : (
+        <Image source={{ uri: item.photo }} style={styles.postImage} />
+      )}
       <Text style={styles.postCaption}>{item.caption}</Text>
 
       <View style={styles.commentsContainer}>
@@ -75,7 +89,7 @@ export default function PostCard({ item, onRefresh }) {
       </TouchableOpacity>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   postContainer: {
@@ -141,3 +155,5 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
 });
+
+export default PostCard;

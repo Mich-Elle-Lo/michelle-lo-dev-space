@@ -76,7 +76,7 @@ export default function BottomTabNav() {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="News"
         component={NewsScreen}
         options={{
@@ -89,7 +89,7 @@ export default function BottomTabNav() {
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

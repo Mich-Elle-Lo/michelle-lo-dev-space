@@ -18,14 +18,13 @@ export default function ProfileScreen() {
   const [userProfile, setUserProfile] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigation = useNavigation();
+  const mobileServer = "http://10.0.0.108:3000";
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userId = await AsyncStorage.getItem("userId");
       try {
-        const response = await axios.get(
-          `http://localhost:3000/users/${userId}`
-        );
+        const response = await axios.get(`${mobileServer}/users/${userId}`);
         setUserProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile", error);

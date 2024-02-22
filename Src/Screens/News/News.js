@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import {
+  PanGestureHandler,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 import {
   View,
   Text,
@@ -14,6 +19,13 @@ export default function NewsScreen() {
   const baseURL = "http://localhost:3000/";
   const [news, setNews] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
+  const navigation = useNavigation();
+  const onSwipe = ({ nativeEvent }) => {
+    if (nativeEvent.translationX > 100) {
+      navigation.navigate("MainApp");
+    }
+  };
 
   const fetchNews = async () => {
     setRefreshing(true);
@@ -34,19 +46,21 @@ export default function NewsScreen() {
     fetchNews();
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={news}
-        keyExtractor={(item) => item?.id?.toString() ?? "default-key"}
-        renderItem={({ item }) => (
-          <View style={styles.postContainer}>
-            <Text style={styles.username}>{item.title}</Text>
-            <Image
-              source={{ uri: item.social_image }}
-              style={styles.postImage}
-            />
-            <Text style={styles.postCaption}>{item.description}</Text>
-            {/* <View style={styles.commentsContainer}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PanGestureHandler onGestureEvent={onSwipe}>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={news}
+            keyExtractor={(item) => item?.id?.toString() ?? "default-key"}
+            renderItem={({ item }) => (
+              <View style={styles.postContainer}>
+                <Text style={styles.username}>{item.title}</Text>
+                <Image
+                  source={{ uri: item.social_image }}
+                  style={styles.postImage}
+                />
+                <Text style={styles.postCaption}>{item.description}</Text>
+                {/* <View style={styles.commentsContainer}>
               {item.comments &&
                 item.comments.map((comment) => (
                   <Text key={comment.id} style={styles.commentText}>
@@ -54,17 +68,19 @@ export default function NewsScreen() {
                   </Text>
                 ))}
             </View> */}
-          </View>
-        )}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor="#fff"
+              </View>
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor="#fff"
+              />
+            }
           />
-        }
-      />
-    </SafeAreaView>
+        </SafeAreaView>
+      </PanGestureHandler>
+    </GestureHandlerRootView>
   );
 }
 

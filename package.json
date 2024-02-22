@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.18",
     "axios": "^1.6.7",
     "expo": "~50.0.6",
+    "expo-av": "^13.10.5",
     "expo-camera": "^14.0.5",
     "expo-image-picker": "^14.7.1",
     "expo-permissions": "^14.4.0",
@@ -29,7 +30,8 @@
     "react-native-screens": "^3.29.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "react-native-gesture-handler": "~2.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

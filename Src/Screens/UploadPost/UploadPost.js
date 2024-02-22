@@ -9,26 +9,73 @@ import {
   SafeAreaView,
   Platform,
   Alert,
+  ActionSheetIOS,
 } from "react-native";
+import { Video } from "expo-av";
+import { Camera } from "expo-camera";
+
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UploadPost({ navigation }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
+  const [media, setMedia] = useState({ uri: null, type: null });
+
+  const [hasPermission, setHasPermission] = useState(null);
 
   const mobileServer = "http://10.0.0.108:3000";
 
-  // const { status } = Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-  // if (status !== "granted") {
-  //   alert("Sorry, we need camera roll permissions to make this work!");
-  //   return;
-  // }
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status: cameraStatus } =
+  //       await Camera.requestCameraPermissionsAsync();
+  //     const { status: libraryStatus } =
+  //       await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //     if (cameraStatus !== "granted" || libraryStatus !== "granted") {
+  //       alert(
+  //         "Sorry, we need camera and library permissions to make this work!"
+  //       );
+  //       return;
+  //     }
+  //     if (Platform.OS === "ios") {
+  //       ActionSheetIOS.showActionSheetWithOptions(
+  //         {
+  //           options: ["Cancel", "Take Photo or Video", "Choose from Library"],
+  //           cancelButtonIndex: 0,
+  //         },
+  //         (buttonIndex) => {
+  //           if (buttonIndex === 1) {
+  //             openCamera();
+  //           } else if (buttonIndex === 2) {
+  //             pickImage();
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       openCamera();
+  //     }
+  //   })();
+  // }, []);
 
+  const openCamera = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    });
+    console.log(result);
+    if (!result.cancelled && result.assets && result.assets.length > 0) {
+      const { uri, mimeType } = result.assets[0];
+      const type = mimeType.split("/")[0];
+      setMedia({ uri, type });
+    }
+  };
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -37,40 +84,76 @@ export default function UploadPost({ navigation }) {
       quality: 1,
     });
     if (!result.cancelled) {
-      setImage(result.assets[0].uri);
-      console.log(result.assets[0].uri);
+      setMedia({
+        uri: result.assets[0].uri,
+        type: result.assets[0].mimeType.split("/")[0],
+      });
     }
   };
 
   const handlePost = async () => {
     const userId = await AsyncStorage.getItem("userId");
-    if (!image || caption.trim() === "") {
-      alert("Please select an image and enter a caption.");
+    if (!media.uri || caption.trim() === "") {
+      Alert.alert(
+        "Missing Fields",
+        "Please select an image/video and enter a caption."
+      );
+      return;
     }
+
     let formData = new FormData();
     formData.append("user_id", userId);
     formData.append("caption", caption);
-    formData.append("photo", {
-      uri: Platform.OS === "android" ? image : image.replace("file://", ""),
-      type: "image/jpeg",
-      name: "upload.jpg",
-    });
+
+    const fileName = media.uri.split("/").pop();
+    const fileType = media.type === "video" ? "video/quicktime" : "image/jpeg";
+    const fileToUpload = {
+      uri: media.uri,
+      name: fileName,
+      type: fileType,
+    };
+
+    formData.append("photo", fileToUpload);
+
     try {
-      const response = await axios.post(`${mobileServer}/posts`, formData);
-      if (response.success) {
-        Alert.alert("Success", "Thank you for posting!");
+      const response = await axios({
+        method: "post",
+        url: `${mobileServer}/posts`,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.success) {
+        Alert.alert("Success", "Post uploaded successfully!");
         navigation.goBack();
       } else {
-        Alert.alert("Error", "Failed to upload post");
+        Alert.alert(
+          "Upload Failed",
+          response.data.message || "Failed to upload post."
+        );
       }
     } catch (error) {
-      console.error(error);
-      Alert.alert("Error", "An error occurred, please try again");
+      console.error("Upload Error:", error);
+      Alert.alert("Error", "An error occurred, please try again.");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      {media.uri &&
+        (media.type === "image" ? (
+          <Image source={{ uri: media.uri }} style={styles.image} />
+        ) : (
+          <Video
+            source={{ uri: media.uri }}
+            style={styles.video}
+            resizeMode="contain"
+            shouldPlay
+            useNativeControls
+          />
+        ))}
       <TextInput
         style={styles.input}
         placeholder="Write a caption..."
@@ -78,8 +161,11 @@ export default function UploadPost({ navigation }) {
         value={caption}
         onChangeText={setCaption}
       />
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+      <Button
+        title="Pick an image/video from camera roll"
+        onPress={pickImage}
+      />
+
       <TouchableOpacity onPress={handlePost} style={styles.button}>
         <Text style={styles.buttonText}>Post</Text>
       </TouchableOpacity>
@@ -89,9 +175,13 @@ export default function UploadPost({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
   },
   input: {
+    width: "90%",
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
@@ -105,10 +195,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: 400,
+    marginBottom: 8,
     resizeMode: "contain",
     marginTop: 20,
     borderRadius: 10,
+  },
+  video: {
+    width: "100%",
+    height: 400,
+    marginBottom: 8,
+    resizeMode: "contain",
+    marginTop: 20,
+    borderRadius: 10,
+  },
+  button: {
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 30,
+    width: "60%",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "bold",
   },
 });
