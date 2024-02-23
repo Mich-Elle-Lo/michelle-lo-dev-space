@@ -28,7 +28,7 @@ export default function UserList() {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("UserProfile", { profileUserId: item.id })
+        navigation.navigate("UsersProfile", { profileUserId: item.id })
       }
     >
       <View style={{ alignItems: "center", marginRight: 20 }}>

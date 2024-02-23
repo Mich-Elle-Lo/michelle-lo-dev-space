@@ -22,10 +22,14 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userId = await AsyncStorage.getItem("userId");
       try {
-        const response = await axios.get(`${mobileServer}/users/${userId}`);
-        setUserProfile(response.data);
+        const userId = await AsyncStorage.getItem("userId");
+        if (userId) {
+          const response = await axios.get(`${mobileServer}/users/${userId}`);
+          setUserProfile(response.data);
+        } else {
+          console.error("User ID not found in AsyncStorage");
+        }
       } catch (error) {
         console.error("Error fetching profile", error);
       }
@@ -40,6 +44,8 @@ export default function ProfileScreen() {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userId");
+      await AsyncStorage.clear();
       navigation.navigate("Login");
     } catch (error) {
       console.error("Logout error:", error);

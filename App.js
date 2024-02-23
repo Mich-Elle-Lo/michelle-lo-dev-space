@@ -7,7 +7,7 @@ import LoginScreen from "./Src/Screens/Login/Login";
 import BottomTabNav from "./Src/Components/BottomTabNav/BottomTabNav";
 import RegisterScreen from "./Src/Screens/Register/Register";
 import NewsScreen from "./Src/Screens/News/News";
-import UserProfile from "./Src/Screens/UserProfile/UserProfile";
+import UsersProfile from "./Src/Screens/UsersProfile/UsersProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
@@ -24,7 +24,7 @@ export default function App() {
           name="Register"
           component={RegisterScreen}
           options={{ headerShown: false }}
-        /> */}
+        />
         <Stack.Screen
           name="MainApp"
           component={BottomTabNav}
@@ -36,8 +36,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="UserProfile"
-          component={UserProfile}
+          name="UsersProfile"
+          component={UsersProfile}
           options={{
             headerShown: false,
           }}

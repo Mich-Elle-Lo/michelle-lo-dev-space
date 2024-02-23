@@ -15,7 +15,7 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 
-export default function UserProfile({ route }) {
+export default function UsersProfile({ route }) {
   const { profileUserId } = route.params;
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
