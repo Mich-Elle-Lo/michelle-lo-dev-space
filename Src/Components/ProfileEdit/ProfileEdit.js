@@ -23,10 +23,12 @@ export default function ProfileEditModal({
   const [location, setLocation] = useState(userProfile.location);
   const [bio, setBio] = useState(userProfile.bio);
 
+  const mobileServer = "http://10.0.0.108:3000";
+
   const handleSave = async (profileData) => {
     const userId = await AsyncStorage.getItem("userId");
     try {
-      await axios.patch(`http://localhost:3000/users/${userId}`, profileData);
+      await axios.patch(`${mobileServer}/users/${userId}`, profileData);
       onClose();
       onSave(profileData);
     } catch (error) {

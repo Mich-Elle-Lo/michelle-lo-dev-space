@@ -47,7 +47,13 @@ const PostCard = memo(({ item, onRefresh }) => {
 
   return (
     <View style={styles.postContainer}>
-      <Text style={styles.username}>{item.username}</Text>
+      <View style={styles.userHeader}>
+        <Image
+          source={{ uri: item.profile_photo }}
+          style={styles.profilePhoto}
+        />
+        <Text style={styles.username}>{item.username}</Text>
+      </View>
       {isVideo ? (
         <Video
           source={{ uri: item.photo }}
@@ -104,10 +110,22 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     paddingBottom: 12,
   },
+  userHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    marginLeft: 15,
+  },
+  profilePhoto: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    marginRight: 10,
+  },
   username: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 20,
     padding: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#343536",

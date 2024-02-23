@@ -21,8 +21,11 @@ export default function RegisterScreen() {
   const navigation = useNavigation();
 
   const handleRegister = async () => {
+    const mobileServer = "http://10.0.0.108:3000";
+    const baseURL = "http://localhost:3000/";
+
     try {
-      const response = await axios.post("http://localhost:3000/register", {
+      const response = await axios.post(`${mobileServer}/register`, {
         username,
         email,
         password,
