@@ -10,8 +10,10 @@ import {
   StyleSheet,
   SafeAreaView,
   RefreshControl,
+  View,
 } from "react-native";
 import PostCard from "../../Components/PostCard/PostCard";
+import UserList from "../../Components/UserList/UserList";
 
 export default function FeedScreen() {
   const navigation = useNavigation();
@@ -52,7 +54,9 @@ export default function FeedScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PanGestureHandler onGestureEvent={onSwipe}>
         <SafeAreaView style={styles.container}>
+          {/* <UserList /> */}
           <FlatList
+            ListHeaderComponent={<UserList />}
             data={posts}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
