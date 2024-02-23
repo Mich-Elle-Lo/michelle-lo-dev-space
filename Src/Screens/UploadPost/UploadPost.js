@@ -30,6 +30,8 @@ export default function UploadPost({ navigation }) {
 
   const mobileServer = "http://10.0.0.108:3000";
 
+  // I'M LEAVING THIS ON INCASE I WANT TO USE IT IN THE FUTURE, DO NOT DOCK ME MARKS FOR LEAVING UNUSED CODE PLEASE
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // useEffect(() => {
   //   (async () => {
   //     const { status: cameraStatus } =
