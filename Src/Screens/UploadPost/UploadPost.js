@@ -163,8 +163,9 @@ export default function UploadPost({ navigation }) {
         value={caption}
         onChangeText={setCaption}
       />
+      <Button title="Take a 🤳🏼 " onPress={openCamera} />
       <Button
-        title="Pick an image/video from camera roll"
+        title="Pick an image/video from camera roll 🎞️"
         onPress={pickImage}
       />
 

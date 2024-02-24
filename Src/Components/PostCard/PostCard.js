@@ -16,7 +16,7 @@ import axios from "axios";
 const PostCard = memo(({ item, onRefresh }) => {
   const [localComment, setLocalComment] = useState("");
   const [placeholderWarning, setPlaceholderWarning] = useState(false);
-  const isVideo = item.photo.endsWith(".mov", ".mp4");
+  const isVideo = item.photo.endsWith(".mp4");
 
   const mobileServer = "http://10.0.0.108:3000";
 

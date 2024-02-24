@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -21,22 +28,18 @@ export default function UserList() {
     }
   };
 
-  //   const navigateToUserProfile = (userId) => {
-  //     navigation.navigate("UserProfile", { profileUserId: userId });
-  //   };
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("UsersProfile", { profileUserId: item.id })
       }
     >
-      <View style={{ alignItems: "center", marginRight: 20 }}>
+      <View style={styles.avatarContainer}>
         <Image
           source={{ uri: item.profile_photo }}
-          style={{ width: 100, height: 100, borderRadius: 50 }}
+          style={{ width: 75, height: 75, borderRadius: 50 }}
         />
-        <Text style={{ marginTop: 5 }}>{item.username}</Text>
+        <Text style={styles.avatarText}>{item.username}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -51,3 +54,14 @@ export default function UserList() {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  avatarContainer: {
+    alignItems: "center",
+    marginRight: 20,
+  },
+  avatarText: {
+    marginTop: 5,
+    color: "white",
+  },
+});

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { Video } from "expo-av";
 import axios from "axios";
@@ -22,6 +23,7 @@ export default function UsersProfile({ route }) {
 
   const baseURL = "http://localhost:3000/";
   const mobileServer = "http://10.0.0.108:3000";
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchUserData(profileUserId);
@@ -41,9 +43,9 @@ export default function UsersProfile({ route }) {
     }
   };
   if (!user) {
-    return <Text style={styles.loadingText}>Loading...</Text>;
+    return <ActivityIndicator />;
   }
-  const navigation = useNavigation();
+
   const onSwipe = ({ nativeEvent }) => {
     if (nativeEvent.translationX < -100) {
       navigation.navigate("MainApp");
