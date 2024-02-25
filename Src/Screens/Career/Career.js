@@ -6,11 +6,14 @@ import {
   FlatList,
   Button,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
+import AddJobPosting from "../../Components/AddJobPosting/AddJobPosting";
 import axios from "axios";
 
 export default function CareerScreen() {
   const [jobPostings, setJobPostings] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const mobileServer = "http://10.0.0.108:3000";
 
@@ -34,6 +37,7 @@ export default function CareerScreen() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.postingContainer}>
+            <Text style={styles.postingTitle}>{item.user_name}</Text>
             <Text style={styles.postingTitle}>{item.job_title}</Text>
             <Text style={styles.postingData}>{item.job_description}</Text>
             <Text style={styles.postingData}>{item.location}</Text>
@@ -49,6 +53,17 @@ export default function CareerScreen() {
             </Text>
           </View>
         )}
+      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.buttonText}>Add Job Posting</Text>
+      </TouchableOpacity>
+
+      <AddJobPosting
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
     </SafeAreaView>
   );
@@ -74,5 +89,15 @@ const styles = StyleSheet.create({
   },
   postingData: {
     color: "white",
+  },
+  button: {
+    backgroundColor: "#3A3A3C",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
