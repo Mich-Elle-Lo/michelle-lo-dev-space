@@ -8,7 +8,6 @@ import BottomTabNav from "./Src/Components/BottomTabNav/BottomTabNav";
 import RegisterScreen from "./Src/Screens/Register/Register";
 import NewsScreen from "./Src/Screens/News/News";
 import UsersProfile from "./Src/Screens/UsersProfile/UsersProfile";
-import WebViewScreen from "./Src/Screens/WebView/WebViewScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,11 +41,6 @@ export default function App() {
           options={{
             headerShown: false,
           }}
-        />
-        <Stack.Screen
-          name="WebViewScreen"
-          component={WebViewScreen}
-          options={{ title: "News" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

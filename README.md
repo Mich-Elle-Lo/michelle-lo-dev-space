@@ -88,4 +88,16 @@ Will attempt light/dark mode.
 A networking/events page.
 Messaging: Chat with fellow users.
 
-![Simulator Screenshot](Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.02.23.png)
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.02.23.png?version%3D1708913745710)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.02.30.png?version%3D1708913697143)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.00.13.png?version%3D1708913763917)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.00.05.png?version%3D1708913783470)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.00.32.png?version%3D1708913737297)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.02.30.png?version%3D1708913798178)
+
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/michellelo/Desktop/BrainStation/michelle-lo-dev-space/Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.19.22.png?version%3D1708913809860)
