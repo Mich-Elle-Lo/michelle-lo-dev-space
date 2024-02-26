@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "DevSpace",
+    "slug": "DevSpace",
+    "version": "1.0.0",
+    "orientation": "portrait",
+
+    "userInterfaceStyle": "light",
+
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.DevSpace"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.anonymous.DevSpace"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
