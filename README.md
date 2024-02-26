@@ -87,3 +87,5 @@ Finalize and connect all pages/features. Conduct testing. Refine what needs to b
 Will attempt light/dark mode.
 A networking/events page.
 Messaging: Chat with fellow users.
+
+![Simulator Screenshot](Src/AppPhotos/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-02-25%20at%2020.02.23.png)
