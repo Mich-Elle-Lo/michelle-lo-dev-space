@@ -16,7 +16,6 @@ import axios from "axios";
 const PostCard = memo(({ item, onRefresh }) => {
   const [localComment, setLocalComment] = useState("");
   const [placeholderWarning, setPlaceholderWarning] = useState(false);
-  const isVideo = item.photo.endsWith(".mp4");
 
   const baseURL = "http://localhost:3000/";
   const mobileServer = "http://10.0.0.108:3000";
@@ -46,6 +45,8 @@ const PostCard = memo(({ item, onRefresh }) => {
     }
   };
 
+  const isVideo = item.photo.endsWith(".mp4") || item.photo.endsWith(".mov");
+
   return (
     <View style={styles.postContainer}>
       <View style={styles.userHeader}>
@@ -55,7 +56,7 @@ const PostCard = memo(({ item, onRefresh }) => {
         />
         <Text style={styles.username}>{item.username}</Text>
       </View>
-      {item.is_video ? (
+      {isVideo ? (
         <Video
           source={{ uri: item.photo }}
           style={styles.postImage}

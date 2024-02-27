@@ -7,8 +7,51 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddJobPosting({ modalVisible, setModalVisible }) {
+  const [jobTitle, setJobTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [salaryRange, setSalaryRange] = useState("");
+  const [experience, setExperience] = useState("");
+  const [qualifications, setQualifications] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [contact, setContact] = useState("");
+
+  const handleSave = async () => {
+    const baseURL = "http://localhost:3000/";
+    const mobileServer = "http://10.0.0.108:3000";
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      const response = await axios.post(`${mobileServer}/job_postings`, {
+        job_title: jobTitle,
+        job_description: description,
+        location,
+        salary_range: salaryRange,
+        experience_level: experience,
+        qualifications,
+        industry,
+        application_email_or_link: contact,
+
+        company_id: userId,
+        job_type: "Full Time",
+        posted_date: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        expiration_date: moment(new Date())
+          .add(30, "days")
+          .format("YYYY-MM-DD HH:mm:ss"),
+        status: "active",
+      });
+
+      console.log(response.data);
+      setModalVisible(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleClose = () => {
     setModalVisible(false);
   };
@@ -30,46 +73,73 @@ export default function AddJobPosting({ modalVisible, setModalVisible }) {
             style={styles.input}
             placeholder="Job Title"
             placeholderTextColor="#999"
+            value={jobTitle}
+            onChangeText={setJobTitle}
           />
           <TextInput
             style={styles.input}
             placeholder="Description"
             placeholderTextColor="#999"
+            value={description}
+            onChangeText={setDescription}
           />
           <TextInput
             style={styles.input}
             placeholder="Location"
             placeholderTextColor="#999"
+            value={location}
+            onChangeText={setLocation}
           />
           <TextInput
             style={styles.input}
             placeholder="Salary Range"
             placeholderTextColor="#999"
+            value={salaryRange}
+            onChangeText={setSalaryRange}
           />
           <TextInput
             style={styles.input}
             placeholder="Experience"
             placeholderTextColor="#999"
+            value={experience}
+            onChangeText={setExperience}
           />
           <TextInput
             style={styles.input}
             placeholder="Qualifications"
             placeholderTextColor="#999"
+            value={qualifications}
+            onChangeText={setQualifications}
           />
           <TextInput
             style={styles.input}
             placeholder="Industry"
             placeholderTextColor="#999"
+            value={industry}
+            onChangeText={setIndustry}
           />
           <TextInput
             style={styles.input}
             placeholder="Contanct"
             placeholderTextColor="#999"
+            value={contact}
+            onChangeText={setContact}
           />
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleSave({ username, email, location, bio })}
+            onPress={() =>
+              handleSave({
+                jobTitle,
+                description,
+                location,
+                salaryRange,
+                experience,
+                qualifications,
+                industry,
+                contact,
+              })
+            }
           >
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>

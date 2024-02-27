@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   input: {
-    color: "black",
+    color: "#D8D9DA",
     width: "75%",
     height: 50,
     backgroundColor: "white",

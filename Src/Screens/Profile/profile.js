@@ -48,6 +48,30 @@ export default function ProfileScreen() {
     setUserProfile((prev) => ({ ...prev, ...profileData }));
   };
 
+  const deletePost = async (postId) => {
+    Alert.alert("Delete Post", "Are you sure you want to delete this post?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Deletion cancelled"),
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: async () => {
+          try {
+            await axios.delete(`${mobileServer}/posts/${postId}`);
+            const updatedPosts = posts.filter((post) => post.id !== postId);
+            setPosts(updatedPosts);
+            Alert.alert("Success", "Post deleted successfully");
+          } catch (error) {
+            console.error("Failed to delete post:", error);
+            Alert.alert("Error", "Failed to delete post");
+          }
+        },
+      },
+    ]);
+  };
+
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userToken");
@@ -114,6 +138,12 @@ export default function ProfileScreen() {
                     </Text>
                   ))}
               </View>
+              <Pressable
+                onPress={() => deletePost(item.id)}
+                style={styles.deleteButton}
+              >
+                <MaterialCommunityIcons name="delete" color="red" size={24} />
+              </Pressable>
             </View>
           )}
         />
@@ -240,5 +270,10 @@ const styles = StyleSheet.create({
   },
   postsList: {
     width: "100%",
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
 });
