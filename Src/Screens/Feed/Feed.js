@@ -17,9 +17,9 @@ import UserList from "../../Components/UserList/UserList";
 
 export default function FeedScreen() {
   const navigation = useNavigation();
-  const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
 
   const baseURL = "http://localhost:3000/";
   const mobileServer = "http://10.0.0.108:3000";
@@ -33,19 +33,25 @@ export default function FeedScreen() {
   const fetchPosts = useCallback(async () => {
     setRefreshing(true);
     try {
-      const response = await axios.get(`${mobileServer}/posts`);
-      setPosts(response.data);
+      const response = await axios.get(`${mobileServer}/posts?page=${page}`);
+      setPosts((prevPosts) => [...prevPosts, ...response.data]);
     } catch (error) {
       console.error("Error getting posts:", error);
     }
     setRefreshing(false);
-  }, [mobileServer]);
+  }, [mobileServer, page]);
 
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
 
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   const onRefresh = () => {
+    setPage(1);
+    setPosts([]);
     fetchPosts();
   };
 
@@ -56,7 +62,7 @@ export default function FeedScreen() {
           <FlatList
             ListHeaderComponent={<UserList />}
             data={posts}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <PostCard item={item} onRefresh={onRefresh} />
             )}
@@ -67,6 +73,8 @@ export default function FeedScreen() {
                 tintColor="#fff"
               />
             }
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
           />
         </SafeAreaView>
       </PanGestureHandler>

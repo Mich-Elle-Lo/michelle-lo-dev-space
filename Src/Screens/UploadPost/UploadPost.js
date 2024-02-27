@@ -160,7 +160,7 @@ export default function UploadPost({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Write a caption..."
-        placeholderTextColor="#888"
+        placeholderTextColor="#D8D9DA"
         value={caption}
         onChangeText={setCaption}
       />
@@ -190,12 +190,13 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     padding: 10,
+    color: "#D8D9DA",
   },
   placeholder: {
     position: "absolute",
     left: 10,
     top: 10,
-    color: "#888",
+    color: "#D8D9DA",
     fontSize: 16,
   },
   image: {
