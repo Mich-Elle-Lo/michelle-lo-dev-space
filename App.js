@@ -46,10 +46,7 @@ export default function App() {
         <Stack.Screen
           name="WebViewScreen"
           component={WebViewScreen}
-          options={{
-            headerTitle: "News",
-            headerShown: true,
-          }}
+          options={{ title: "News" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

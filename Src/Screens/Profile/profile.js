@@ -9,10 +9,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   FlatList,
-  RefreshControl,
 } from "react-native";
-import { Video } from "expo-av";
-
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -24,13 +21,11 @@ export default function ProfileScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigation = useNavigation();
   const [posts, setPosts] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
 
   const baseURL = "http://localhost:3000/";
   const mobileServer = "http://10.0.0.108:3000";
 
   const fetchUserData = async (userId) => {
-    setRefreshing(true);
     try {
       const userId = await AsyncStorage.getItem("userId");
       const userResponse = await axios.get(`${mobileServer}/users/${userId}`);
@@ -40,7 +35,6 @@ export default function ProfileScreen() {
         `${mobileServer}/users/${userId}/posts`
       );
       setPosts(postsResponse.data);
-      setRefreshing(false);
     } catch (error) {
       console.error(error);
     }
@@ -49,10 +43,6 @@ export default function ProfileScreen() {
   useEffect(() => {
     fetchUserData();
   }, []);
-
-  const onRefresh = () => {
-    fetchUserData();
-  };
 
   const onSaveChanges = async (profileData) => {
     setUserProfile((prev) => ({ ...prev, ...profileData }));
@@ -156,13 +146,6 @@ export default function ProfileScreen() {
               </Pressable>
             </View>
           )}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              tintColor="#fff"
-            />
-          }
         />
 
         <View style={styles.buttonsContainer}>
